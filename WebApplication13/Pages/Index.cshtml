@@ -1,0 +1,122 @@
+﻿@page
+@*@model WebApplication13.Pages.IndexModel*@
+@*<h2>@Model.Message<h2>
+<form method="post">
+    <input type="text" name="username"/>
+    <input type="submit" value="Отправить"/>
+</form>
+@functions
+{
+    public string Message{get;private set;}="";
+    public void OnGet()=>Message="Введите свое имя";
+    public void OnPost(string username)=>Message=$"Ваше имя:{username}";
+}
+*@
+@*@model WebApplication13.Pages.IndexModel
+<h2>@Model.Message</h2>
+<form method="post">
+    <p>
+        <label>Имя:</label><br/>
+        <input type="text" name="name"/>
+   </p>
+   <p>
+       <label>Возраст:</label><br/>
+       <input type="number" name="age"/>
+  </p>
+  <input type="submit" value="Отправить"/>
+</form>*@
+@*@model WebApplication13.Pages.IndexModel
+<h2>Введите имя сотрудников</h2>
+<form method="post">
+    <p><input name="human"/></p>
+    <p><input name="human"/></p>
+    <p><input name="human"/></p>
+    <p><input name="human"/></p>
+    <p><input name="human"/></p>
+    <input type="submit" value="Отправить"/>
+</form>
+<h3>Список сотрудников</h3>
+<ul>
+    @foreach(var human in Model.Human)
+    {
+        <li>@human</li>
+    }
+</ul>*@
+@*<h2>Введите столицы стран</h2>
+<form method="post">
+    <p>
+        Германиия: <input type="text" name="items[germany]"/>
+    </p>
+    <p>
+        Франция: <input type="text" name="items[france]"/>
+    </p>
+    <p>
+        Россия: <input type="text" name="items[russia]"/>
+    </p>
+    <input type="submit" value="Отправить"/>
+</form>
+<h3>Страны и столицы</h3>
+<ul>
+    @foreach(var country in Countries)
+    {
+        <li>@country.Key - @country.Value</li>
+    }
+</ul>
+@functions
+{
+    Dictionary<string,string> Countries{get;set;}=new();
+    public void OnPost(Dictionary<string,string> items)
+    {
+        Countries=items;
+    }
+}*@
+@*<h2>Введите данные</h2>
+<form method="post">
+    <p>
+        Human1 Name:<br/>
+        <input name="human[0].name"/><br/>
+        Human1 Age:<br/>
+        <input name="human[0].age"/><br/>
+    </p>
+    <p>
+        Human2 Name:<br/>
+        <input name="human[1].name"/><br/>
+        Human2 Age:<br/>
+        <input name="human[1].age"/><br/>
+    </p>
+    <input type="submit" value="Оправить"/>
+</form>
+<h3>Список сотрудников</h3>
+<ul>
+    @foreach(var person in Human)
+    {
+        <li>@person.Name (@person.Age)</li>
+    }
+</ul>
+@functions{
+    Person[] Human {get;set;}={};
+    public void OnPost(Person[] human)
+    {
+        Human=human;
+    }
+    public record class Person(string Name, int Age);
+}*@
+@model WebApplication13.Pages.IndexModel
+<h2>Введите данные</h2>
+<form method="post">
+    <p>
+        <label>Имя:</label><br/>
+        <input type="text" name="name"/>
+    </p>
+    <p>
+        <label>Возраст:</label><br/>
+        <input type="number" name="age"/>
+    </p>
+    <input type="submit" value="Оправить"/>
+</form>
+@if(Request.Method=="POST")
+{
+    <h3>Полученные данныу</h3>
+    <p>Name: @Model.Name</p>
+    <p>Age: @Model.Age</p>
+}
